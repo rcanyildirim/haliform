@@ -1,0 +1,34 @@
+{
+  "iller": [
+    {
+      "il": "İstanbul",
+      "ilceler": [
+        {
+          "ilce": "Kadıköy",
+          "mahalleler": ["Fikirtepe", "Caddebostan", "Kozyatağı", "Göztepe"]
+        },
+        {
+          "ilce": "Beşiktaş",
+          "mahalleler": ["Levent", "Etiler", "Bebek", "Arnavutköy"]
+        },
+        {
+          "ilce": "Maltepe",
+          "mahalleler": ["Fındıklı", "Cevizli", "Altayçeşme", "Başıbüyük"]
+        }
+      ]
+    },
+    {
+      "il": "Ankara",
+      "ilceler": [
+        {
+          "ilce": "Çankaya",
+          "mahalleler": ["Kızılay", "Bahçelievler", "Ayrancı"]
+        },
+        {
+          "ilce": "Keçiören",
+          "mahalleler": ["Yenimahalle", "Kültür", "Cebeci"]
+        }
+      ]
+    }
+  ]
+}
