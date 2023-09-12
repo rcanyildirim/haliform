@@ -119,7 +119,7 @@ export default function Header() {
   const [selectedNeighborhood, setSelectedNeighborhood] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [tarihDropdownGorunur, setTarihDropdownGorunur] = useState(false);
-
+  const [selectedCode, setSelectedCode] = useState('+90');
 
   const handleBelliBirZamanClick = () => {
     setTarihDropdownGorunur(true);
@@ -227,7 +227,58 @@ export default function Header() {
     setActiveTabIndex(prevIndex => (prevIndex + 1) % panes.length);
     setProgress(prevProgress => prevProgress + 15);
   }
-  }; 
+  };
+  const handleTab7Continue = () => {
+    const isimValue = document.querySelector('input[name="isim"]').value;
+    const soyisimValue = document.querySelector('input[name="soyisim"]').value;
+  
+    if (!isimValue || !soyisimValue) {
+      setErrorMessage("Lütfen isim ve soyisim giriniz.");
+    } else {
+      console.log("İsim Soyisim: " + isimValue + " " + soyisimValue);
+      setErrorMessage("");
+      setActiveTabIndex(prevIndex => (prevIndex + 1) % panes.length);
+      setProgress(prevProgress => prevProgress + 15);
+    }
+  };
+
+  const handleCodeChange = (e) => {
+    setSelectedCode(e.target.value);
+  };
+
+  const placeholderText = () => {
+    switch (selectedCode) {
+      case '+90':
+        return '501 234 56 78';
+      case '+44':
+        return '7400 123456';
+      case '+49':
+        return '1512 3456789';
+      case '+966':
+        return '51 234 5678';
+      case '+20':
+        return '100 123 4567';
+      default:
+        return '';
+    }
+  };
+
+  const handleTab8Continue = () => {
+    const phoneNumberValue = document.querySelector('input[name="tel"]').value;
+    const isContactPermissionChecked = document.querySelector('input[name="contactPermission"]').checked;
+    const isDataTransferPermissionChecked = document.querySelector('input[name="dataTransferPermission"]').checked;
+  
+
+    if (!phoneNumberValue || (!isContactPermissionChecked && !isDataTransferPermissionChecked)) {
+      setErrorMessage("Lütfen telefon numarası girip onaylama yapınız.");
+    } else {
+      console.log("Telefon numarası: " + selectedCode + phoneNumberValue)
+      setErrorMessage("");
+      setActiveTabIndex((prevIndex) => (prevIndex + 1) % panes.length);
+      setProgress((prevProgress) => prevProgress + 15);
+    }
+  };
+  
   const panes = [
     {
       render: () => (
@@ -390,7 +441,51 @@ export default function Header() {
     {
       render: ()=>(
         <Tab.Pane>
-          <label id='radioQuestion2'>Teşekkürler! Başvurunuz alınmıştır.</label>
+          <label id='radioQuestion2'>Lütfen adını ve soyadını gir</label>
+          <p id='bilgi'>Hizmet verenlerimiz ad ve soyad olan taleplere daha hızlı<br/>dönüş yapıyor. İsim ve soyismin baş harflerinin büyük olması<br/>daha profesyonel bir görünüm sağlayacaktır.</p>
+          <input type='textbox' name='isim' placeholder='Adın' style={{width: '350px', height: '40px'}}></input>
+          <p/>
+          <input type='textbox' name='soyisim' placeholder='Soyadın' style={{width: '350px', height: '40px'}}></input>
+        </Tab.Pane>
+      )
+    },
+    {
+      render: ()=>(
+        <Tab.Pane>
+          <label id='radioQuestion2'>Cep telefonun?</label>
+          <table style={{marginTop:'20px', marginLeft:'40px'}}>
+            <tr>
+              <td>
+                <select id='alankodu' style={{height:'40px'}} onChange={handleCodeChange}>
+                  <option value='+90'>TR +90</option>
+                  <option value='+44'>UK +44</option>
+                  <option value='+49'>DE +49</option>
+                  <option value='+966'>SA +966</option>
+                  <option value='+20'>EG +20</option>
+                </select>
+              </td>
+              <td>
+               <input name='tel' placeholder={placeholderText()} maxLength={11} style={{width:'300px', height:'40px'}}></input></td>
+            </tr>
+            <tr>
+              <td colSpan={2}>
+                <select id='teklif' style={{width:'383px',height:'40px'}}>
+                  <option>Teklif veren arayabilir</option>
+                  <option>Arayabilir ama numaram gizli kalsın</option>
+                </select>
+              </td>
+            </tr>
+          </table>
+          <p style={{fontSize:"14px", textAlign:"center", color:"grey"}}>Halı yıkama işine teklif verebilmeleri için teklif verenlerin telefonla arayabilmeleri gerekiyor.</p>
+          <label style={{position:"absolute", left:"55px"}}><input type='checkbox' name='contactPermission'/> İletişim izni</label><br/>
+          <label style={{position:"absolute", left:"55px"}}><input type='checkbox' name='dataTransferPermission'/> Kişisel veri işleme aktarım izni</label>
+        </Tab.Pane>
+      )
+    },
+    {
+      render: () =>(
+        <Tab.Pane>
+          <label id='radioQuestion2'>Teşekkür ederiz! Başvurunuzu almış bulunmaktayız ve mümkün olan en kısa zamanda sizinle iletişime geçeceğiz</label>
         </Tab.Pane>
       )
     }
@@ -422,7 +517,7 @@ export default function Header() {
     <div>
       <div className='haliyikamaform'>
         <div className='header'>
-          <h1 className='title'><button id='geri' icon="world" onClick={azalt} style={{ display: activeTabIndex > 0 && activeTabIndex < 7 ? 'inline-block' : 'none' }}><i class="fa-solid fa-arrow-left "></i></button>Halı Yıkama<ButtonExampleIcon openModal={openModal} /></h1>
+          <h1 className='title'><button id='geri' icon="world" onClick={azalt} style={{ display: activeTabIndex > 0 && activeTabIndex < 9 ? 'inline-block' : 'none' }}><i class="fa-solid fa-arrow-left "></i></button>Halı Yıkama<ButtonExampleIcon openModal={openModal} /></h1>
           <Progress color='green' percent={progress} />
         </div>
         <Modal open={modalOpen} onClose={closeModal} size="tiny">
@@ -461,6 +556,12 @@ export default function Header() {
           )}
           {activeTabIndex === 6 && (
             <button onClick={handleTab6Continue}>DEVAM</button>
+          )}
+          {activeTabIndex === 7 && (
+            <button onClick={handleTab7Continue}>DEVAM</button>
+          )}
+          {activeTabIndex === 8 && (
+            <button onClick={handleTab8Continue}>TALEBİ GÖNDER</button>
           )}
         </div>
       </div>
