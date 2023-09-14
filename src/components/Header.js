@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
-import TarihDropdown from './TarihDropdown';
-import { Form, TextArea, Button, Icon, Progress, Tab, Modal, Dropdown} from 'semantic-ui-react';
-
+import Tab1 from './Tab1';
+import Tab2 from './Tab2';
+import Tab3 from './Tab3';
+import Tab4 from './Tab4';
+import Tab6 from './Tab6';
+import Tab7 from './Tab7';
+import Tab8 from './Tab8';
+import Tab9 from './Tab9';
+import {Button, Icon, Progress, Tab, Modal, Dropdown} from 'semantic-ui-react';
 
 const countryOptions = [
   { key: "ist", value: "ist", text: "İstanbul" },
@@ -92,20 +98,6 @@ const ButtonExampleIcon = ({ openModal }) => {
   );
 };
 
-const TextAreaExampleTextArea = () => (
-  <Form>
-    <TextArea id="ihtiyacne" placeholder='Aklına gelen hangi detaylar var?' />
-  </Form>
-
-)
-const TextAreaExampleTextArea2 = () => (
-  <Form>
-    <TextArea id="email" placeholder='Lütfen E-Mail adresinizi giriniz...' />
-  </Form>
-  
-)
-  
-
 export default function Header() {
   const [selectedOption1, setSelectedOption1] = useState(null);
   const [selectedOption2, setSelectedOption2] = useState(null);
@@ -119,7 +111,6 @@ export default function Header() {
   const [selectedNeighborhood, setSelectedNeighborhood] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [tarihDropdownGorunur, setTarihDropdownGorunur] = useState(false);
-  const [selectedCode, setSelectedCode] = useState('+90');
 
   const handleBelliBirZamanClick = () => {
     setTarihDropdownGorunur(true);
@@ -146,8 +137,6 @@ export default function Header() {
     console.log(combinedValue);
 
   };
-
-  
 
   const handleContinue = () => {
     if (selectedCity && selectedDistrict && selectedNeighborhood) {
@@ -241,38 +230,18 @@ export default function Header() {
       setProgress(prevProgress => prevProgress + 15);
     }
   };
-
-  const handleCodeChange = (e) => {
-    setSelectedCode(e.target.value);
-  };
-
-  const placeholderText = () => {
-    switch (selectedCode) {
-      case '+90':
-        return '501 234 56 78';
-      case '+44':
-        return '7400 123456';
-      case '+49':
-        return '1512 3456789';
-      case '+966':
-        return '51 234 5678';
-      case '+20':
-        return '100 123 4567';
-      default:
-        return '';
-    }
-  };
+  
+  
 
   const handleTab8Continue = () => {
     const phoneNumberValue = document.querySelector('input[name="tel"]').value;
     const isContactPermissionChecked = document.querySelector('input[name="contactPermission"]').checked;
     const isDataTransferPermissionChecked = document.querySelector('input[name="dataTransferPermission"]').checked;
-  
 
     if (!phoneNumberValue || (!isContactPermissionChecked && !isDataTransferPermissionChecked)) {
       setErrorMessage("Lütfen telefon numarası girip onaylama yapınız.");
     } else {
-      console.log("Telefon numarası: " + selectedCode + phoneNumberValue)
+      console.log("Telefon numarası: " + phoneNumberValue)
       setErrorMessage("");
       setActiveTabIndex((prevIndex) => (prevIndex + 1) % panes.length);
       setProgress((prevProgress) => prevProgress + 15);
@@ -281,104 +250,16 @@ export default function Header() {
   
   const panes = [
     {
-      render: () => (
-        <Tab.Pane>
-          <label id='radioQuestion'>&emsp; &emsp; &emsp; Halı Nerede Yıkansın ?</label>
-          <table className='table'>
-            <tr>
-              <td>
-                <button className={`select ${selectedOption1 === "adresten_alinip_teslim_edilsin" ? 'secili' : ''}`} onClick={() => handleOptionChange("adresten_alinip_teslim_edilsin", "250TL - 750TL")}>
-                  <input type='radio' name='option1'  checked={selectedOption1 === "adresten_alinip_teslim_edilsin"} readOnly />
-                  &emsp; Adresten alınıp teslim edilsin</button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <button className={`select ${selectedOption1 === "evde_halı_temizliği_yapılsın" ? 'secili' : ''}`} onClick={() => handleOptionChange("evde_halı_temizliği_yapılsın", "300TL - 2500TL")}>
-                  <input type='radio' name='option1'  checked={selectedOption1 === "evde_halı_temizliği_yapılsın"} readOnly />
-                  &emsp; Evde halı temizliği yapılsın</button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <button className={`select ${selectedOption1 === "ofiste_halı_temizliği_yapılsın" ? 'secili' : ''}`} onClick={() => handleOptionChange("ofiste_halı_temizliği_yapılsın", "600TL - 5040TL")}>
-                  <input type='radio' name='option1'  checked={selectedOption1 === "ofiste_halı_temizliği_yapılsın"} readOnly />
-                  &emsp; Ofiste halı temizliği yapılsın</button>
-              </td>
-            </tr>
-          </table>
-        </Tab.Pane>
-      ),
-    },
-    { render: () => 
-    <Tab.Pane>
-      <div className='haliana'>
-        <label id='howmt'>Kaç metrekare halı yıkanacak?</label>
-        <p id='bilgi'>Büyük oda halıları 6m2'dir ve çoğu halı 1 ila 6m2<br/>arasındadır. En yakın seçeneği seçmen yeterli.</p>
-        <table className='mtsec'>
-            <tr>
-                <td><button className={`select2 ${selectedOption2 === "10" ? 'secili' : ''}`} onClick={() => handleOptionChange("10", "600TL - 5040TL")}><input name='option2' checked={selectedOption2 === "10"} type='radio'/> 10</button></td>
-            </tr>
-            <tr>
-                <td><button className={`select2 ${selectedOption2 === "15" ? 'secili' : ''}`} onClick={() => handleOptionChange("15", "600TL - 5040TL")}><input name='option2' checked={selectedOption2 === "15"} type='radio'/> 15</button></td>
-            </tr>
-            <tr>
-                <td><button className={`select2 ${selectedOption2 === "20" ? 'secili' : ''}`} onClick={() => handleOptionChange("20", "600TL - 5040TL")}><input name='option2' checked={selectedOption2 === "20"}  type='radio'/> 20</button></td>
-            </tr>
-            <tr>
-                <td><button className={`select2 ${selectedOption2 === "25" ? 'secili' : ''}`} onClick={() => handleOptionChange("25", "600TL - 5040TL")}><input name='option2' checked={selectedOption2 === "25"} type='radio'/> 25</button></td>
-            </tr>
-            <tr>
-                <td><button className={`select2 ${selectedOption2 === "30" ? 'secili' : ''}`} onClick={() => handleOptionChange("30", "600TL - 5040TL")}><input name='option2' checked={selectedOption2 === "30"} type='radio'/> 30</button></td>
-            </tr>
-            <tr>
-                <td><button className={`select2 ${selectedOption2 === "40" ? 'secili' : ''}`} onClick={() => handleOptionChange("40", "600TL - 5040TL")}><input name='option2' checked={selectedOption2 === "40"} type='radio'/> 40</button></td>
-            </tr>
-            <tr>
-                <td><button className={`select2 ${selectedOption2 === "50" ? 'secili' : ''}`} onClick={() => handleOptionChange("50", "600TL - 5040TL")}><input name='option2' checked={selectedOption2 === "50"}  type='radio'/> 50</button></td>
-            </tr>
-            <tr>
-                <td><button className={`select2 ${selectedOption2 === "60" ? 'secili' : ''}`} onClick={() => handleOptionChange("60", "600TL - 5040TL")}><input name='option2' checked={selectedOption2 === "60"} type='radio'/> 60</button></td>
-            </tr>
-            <tr>
-                <td><button className={`select2 ${selectedOption2 === "80 veya daha fazla" ? 'secili' : ''}`} onClick={() => handleOptionChange("80 veya daha fazla", "600TL - 5040TL")}><input name='option2' checked={selectedOption2 === "80 veya daha fazla"} type='radio'/> 80 veya daha fazla</button></td>
-            </tr>
-        </table>
-    </div>
-    </Tab.Pane> 
+      render: () => (<Tab1 selectedOption1={selectedOption1} handleOptionChange={handleOptionChange}/>)
     },
     {
-      render: () => (
-        <Tab.Pane>
-          <label id='radioQuestion2'>Çıkarılmasını istediğin lekeler var mı?</label>
-          <table className='leke'>
-            <tr>
-              <td>
-                <button className={`select ${selectedOption3 === "evet_cikmasi_gereken_yerler_var" ? 'secili' : ''}`} onClick={() => handleOptionChange("evet_cikmasi_gereken_yerler_var", "500TL - 1000TL")}>
-                  <input type='radio' name='option3'  checked={selectedOption3 === "evet_cikmasi_gereken_yerler_var"} readOnly />
-                  Evet, çıkması gereken yerler var.
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <button className={`select ${selectedOption3 === "hayir_standart_yikama_istiyorum" ? 'secili' : ''}`} onClick={() => handleOptionChange("hayir_standart_yikama_istiyorum", "1200TL - 1500TL")}>
-                  <input type='radio' name='option3'  checked={selectedOption3 === "hayir_standart_yikama_istiyorum"} />
-                  Hayır, standart yıkama istiyorum.
-                </button>
-              </td>
-            </tr>
-          </table>
-        </Tab.Pane>
-      ),
+      render: () => (<Tab2 selectedOption2={selectedOption2} handleOptionChange={handleOptionChange}/>)
     },
     {
-      render: () =>(
-      <Tab.Pane id="ihtiyac">
-        <label id='radioQuestion2'>İhtiyacın detayları neler ?</label>
-        <TextAreaExampleTextArea/><br/>
-      </Tab.Pane>
-      )
+      render: () => (<Tab3 selectedOption3={selectedOption3} handleOptionChange={handleOptionChange}/>)
+    },
+    {
+      render: () =>(<Tab4 selectedOption4={selectedOption4} handleOptionChange={handleOptionChange}/>)
     },
     {
       render: () =>(
@@ -401,101 +282,23 @@ export default function Header() {
       )
     },
     {
-      render: () =>(
-        <Tab.Pane>
-        <label id='radioQuestion2'>Ne zaman?</label>
-        <table className='tarihTable'>
-          <tr>
-            <td colSpan={2}><button className={`bellibuton ${selectedOption4 === "belli_bir_zaman" ? 'secili' : ''}`} onClick={() => {handleBelliBirZamanClick(); handleOptionChange("belli_bir_zaman", "500TL - 1000TL")}}>
-              <input type='radio' name='select4' checked={selectedOption4 === "belli_bir_zaman"}/>Belli bir zaman (üç hafta içinde)</button></td>
-          </tr>
-          {tarihDropdownGorunur && (
-          <tr>
-            <td><TarihDropdown/></td>
-          </tr>
-          )}
-          <tr>
-            <td colSpan={2}><button className={`bellibuton ${selectedOption4 === "iki_ay_icinde" ? 'secili' : ''}`} onClick={() => {handleDigerButon1(); handleOptionChange("iki_ay_icinde", "500TL - 1000TL")}} >
-              <input type='radio' name='select4' checked={selectedOption4 === "iki_ay_icinde"}/>İki ay içinde</button></td>
-          </tr>
-          <tr>
-            <td colSpan={2}><button className={`bellibuton ${selectedOption4 === "alti_ay_icinde" ? 'secili' : ''}`} onClick={() => {handleDigerButon1(); handleOptionChange("alti_ay_icinde", "500TL - 1000TL")}} >
-              <input type='radio' name='select4' checked={selectedOption4 === "alti_ay_icinde"}/>Altı ay içinde</button></td>
-          </tr>
-          <tr>
-            <td colSpan={2}><button className={`bellibuton ${selectedOption4 === "sadece_fiyat_bakiyorum" ? 'secili' : ''}`} onClick={() => {handleDigerButon1(); handleOptionChange("sadece_fiyat_bakiyorum", "500TL - 1000TL")}} >
-              <input type='radio' name='select4' checked={selectedOption4 === "sadece_fiyat_bakiyorum"}/>Sadece fiyat bakıyorum</button></td>
-          </tr>
-        </table>
-        </Tab.Pane>
-      )
+      render: () =>(<Tab6 selectedOption4={selectedOption4} handleOptionChange={handleOptionChange} handleBelliBirZamanClick={handleBelliBirZamanClick} handleDigerButon1={handleDigerButon1} tarihDropdownGorunur={tarihDropdownGorunur}/>)
     },
     {
-      render: ()=>(
-        <Tab.Pane>
-          <label id='radioQuestion2'>Email adresini gir</label><br/><br/>
-          <TextAreaExampleTextArea2/>
-        </Tab.Pane>
-      )
+      render: ()=>(<Tab7/>)
     },
     {
-      render: ()=>(
-        <Tab.Pane>
-          <label id='radioQuestion2'>Lütfen adını ve soyadını gir</label>
-          <p id='bilgi'>Hizmet verenlerimiz ad ve soyad olan taleplere daha hızlı<br/>dönüş yapıyor. İsim ve soyismin baş harflerinin büyük olması<br/>daha profesyonel bir görünüm sağlayacaktır.</p>
-          <input type='textbox' name='isim' placeholder='Adın' style={{width: '350px', height: '40px'}}></input>
-          <p/>
-          <input type='textbox' name='soyisim' placeholder='Soyadın' style={{width: '350px', height: '40px'}}></input>
-        </Tab.Pane>
-      )
+      render: ()=>(<Tab8/>)
     },
     {
-      render: ()=>(
-        <Tab.Pane>
-          <label id='radioQuestion2'>Cep telefonun?</label>
-          <table style={{marginTop:'20px', marginLeft:'40px'}}>
-            <tr>
-              <td>
-                <select id='alankodu' style={{height:'40px'}} onChange={handleCodeChange}>
-                  <option value='+90'>TR +90</option>
-                  <option value='+44'>UK +44</option>
-                  <option value='+49'>DE +49</option>
-                  <option value='+966'>SA +966</option>
-                  <option value='+20'>EG +20</option>
-                </select>
-              </td>
-              <td>
-               <input name='tel' placeholder={placeholderText()} maxLength={11} style={{width:'300px', height:'40px'}}></input></td>
-            </tr>
-            <tr>
-              <td colSpan={2}>
-                <select id='teklif' style={{width:'383px',height:'40px'}}>
-                  <option>Teklif veren arayabilir</option>
-                  <option>Arayabilir ama numaram gizli kalsın</option>
-                </select>
-              </td>
-            </tr>
-          </table>
-          <p style={{fontSize:"14px", textAlign:"center", color:"grey"}}>Halı yıkama işine teklif verebilmeleri için teklif verenlerin telefonla arayabilmeleri gerekiyor.</p>
-          <label style={{position:"absolute", left:"55px"}}><input type='checkbox' name='contactPermission'/> İletişim izni</label><br/>
-          <label style={{position:"absolute", left:"55px"}}><input type='checkbox' name='dataTransferPermission'/> Kişisel veri işleme aktarım izni</label>
-        </Tab.Pane>
-      )
+      render: ()=>(<Tab9/>)
     },
     {
-      render: () =>(
-        <Tab.Pane>
-          <label id='radioQuestion2'>Teşekkür ederiz! Başvurunuzu almış bulunmaktayız ve mümkün olan en kısa zamanda sizinle iletişime geçeceğiz</label>
-        </Tab.Pane>
-      )
+      render: () =>(<Tab.Pane><label id='radioQuestion2'>Teşekkür ederiz! Başvurunuzu almış bulunmaktayız ve mümkün olan en kısa zamanda sizinle iletişime geçeceğiz</label></Tab.Pane>)
     }
   ];
   
-  const tabStyle = {
-    width: "520px",
-    height: "400px",
-    marginTop: "-42px",
-  };
+  const tabStyle = {width: "520px", height: "400px", marginTop: "-42px",};
 
   const TabExampleBasic = () => <Tab panes={panes} style={tabStyle} activeIndex={activeTabIndex} />;
 
@@ -565,6 +368,6 @@ export default function Header() {
           )}
         </div>
       </div>
-    </div>
+      </div>
   );
 }
